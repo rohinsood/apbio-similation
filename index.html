@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet"
+  href="https://fonts.googleapis.com/css?family=Poppins">
+</head>
+<link rel="stylesheet" href="styles.css">
+<body>
+
+  <div class="center">
+    <h1>Ecosystem Dynamics Simulation</h1>
+
+    <div class="container">
+      <div class="item">
+        <h2>
+          Abiotic Factors:
+        </h2>
+
+        <label for="climate">
+          <p>
+            Climate
+          </p>
+        </label>
+        <input type="range" id="climate" min="0" max="10" value="5">
+        <br>
+        
+        <label for="water">
+          <p>
+            Water Availability
+          </p>
+        </label>
+        <input type="range" id="water" min="0" max="10" value="5">
+        <br>
+        
+        <label for="disaster">
+          <p>
+            Natural Disasters 
+          </p>
+        </label>
+        <input type="range" id="disaster" min="0" max="10" value="0">
+        <br>
+      </div>
+
+      <div class="item">
+        <h2>
+          Your Ecosystem:
+        </h2>
+        <img id="ecosystem" src="./images/jungle.jpeg" alt="JUNGLE">
+        <h2 id="population">
+          
+        </h2>
+      </div>
+
+      <div class="item">
+        <h2>
+          Biotic Factors:
+        </h2>
+
+        <label for="competition">
+          <p>
+            Competition
+          </p>
+        </label>
+        <input type="range" id="competition" min="0" max="10" value="5">
+        <br>
+        
+        <label for="predation">
+          <p>
+            Predation
+          </p>
+        </label>
+        <input type="range" id="predation" min="0" max="10" value="5">
+        <br>
+        
+        <label for="biodiversity">
+          <p>
+            Biodiversity
+          </p>
+        </label>
+        <input type="range" id="biodiversity" min="0" max="10" value="5">
+        <br>
+      </div>
+
+    </div>
+    
+  </div>
+
+  <script>
+    const ecosystem = document.getElementById("ecosystem");
+    const population = document.getElementById("population");
+
+    const climate = document.getElementById("climate");
+    const water = document.getElementById("water");
+    const disaster = document.getElementById("disaster");
+    const competition = document.getElementById("competition");
+    const predation = document.getElementById("predation");
+    const biodiversity = document.getElementById("biodiversity");
+
+    let pop = 100;
+    let override = new Boolean(false);
+
+    function updatePopulation() {
+      population.textContent = "Population: " + pop;
+    }
+
+    function climateInfluence() {
+      if (water.value >= 2) {
+        if (climate.value < 3) {
+          ecosystem.setAttribute("src", "./images/freeze.jpeg");
+          pop = 0;
+        } else if (climate.value > 7) {
+          pop = 0;
+          ecosystem.setAttribute("src", "./images/fire.jpeg");
+        } else {
+          pop = 100;
+          ecosystem.setAttribute("src", "./images/jungle.jpeg");
+        }
+      }
+    }
+
+    function waterInfluence() {
+      if (water.value < 2) {
+        pop = 0;
+        ecosystem.setAttribute("src", "./images/desert.jpg");
+      }
+      else if (water.value > 8) {
+        pop = 200;
+      }
+      else {
+        pop = 100;
+        climateInfluence();
+      }
+    }
+
+    function disasterInfluence() {
+      if (disaster.value > 0) {
+        pop = 0;
+        ecosystem.setAttribute("src", "./images/desert.jpg");
+      } else {
+        climateInfluence();
+      }
+    }
+
+    function competitionInfluence() {
+      pop = competition.value == 0 ? 150 : 100 + 10 * (5 - competition.value);
+    }
+
+    function predationInfluence() {
+      pop = predation.value == 0 ? 150 : 100 + 10 * (5 - predation.value);
+      biodiversity.value = 10 - predation.value
+    }
+
+    function biodiversityInfluence() {
+      pop = biodiversity.value == 0 ? 0 : 100 - 10 * (5 - biodiversity.value);
+    }
+
+    climate.addEventListener('input', () => climateInfluence());
+
+    water.addEventListener('input', () => waterInfluence());
+
+    disaster.addEventListener('input', () => disasterInfluence());
+
+    competition.addEventListener('input', () => competitionInfluence());
+
+    predation.addEventListener('input', () => predationInfluence());
+
+    biodiversity.addEventListener('input', () => biodiversityInfluence())
+
+    setInterval(() => updatePopulation(), 500);
+
+
+
+
+    
+  </script>
+</body>
+</html>

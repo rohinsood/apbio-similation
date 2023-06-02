@@ -1,0 +1,52 @@
+body {
+  font-family: "Poppins";
+}
+
+#ecosystem {
+  width: 400px;
+  height: 300px;
+  border: 1px solid black;
+  margin-bottom: 20px;
+}
+
+.center {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  display: grid;
+  width: 75%;
+  grid-template-columns: [col1-start] 33.3% [col1-end col2-start] 33.3% [col2-end col3-start] 33.3% [col3-end];
+  column-gap: 50px;
+  justify-content: center;
+  margin: 50px;
+}
+
+.item {
+  grid-row: 1 / 1;
+}
+
+h1 {
+  font-size: 3rem;
+  font-weight: bolder;
+  text-align: center;
+}
+
+h2 {
+  font-size: 2rem;
+  font-weight: bolder;
+  text-align: center;
+}
+
+p {
+  font: 1.5rem;
+  font-weight: bold;
+  text-align: center;
+}
+
+input {
+  width: 100%;
+}
